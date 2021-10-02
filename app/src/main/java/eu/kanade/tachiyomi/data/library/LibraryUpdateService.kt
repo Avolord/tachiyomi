@@ -236,6 +236,11 @@ class LibraryUpdateService(
     fun addMangaToQueue(categoryId: Int, target: Target) {
         val libraryManga = db.getLibraryMangas().executeAsBlocking()
 
+        for (_manga in libraryManga) {
+            Timber.tag("TACHISYNC_DEV")
+                .v("Title: %s, Date-Added: %s, Genre: %s", _manga.title, _manga.date_added, _manga.genre)
+        }
+
         var listToUpdate = if (categoryId != -1) {
             libraryManga.filter { it.category == categoryId }
         } else {
